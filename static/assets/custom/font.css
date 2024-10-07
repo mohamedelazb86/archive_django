@@ -1,0 +1,14 @@
+@font-face {
+    font-family: myfont;
+    src: url(ReemKufiInk-Regular.ttf);
+  }
+body{
+    font-family: myfont;
+    font-size: xx-large;
+}
+.font-color{
+  font-size: xx-large;
+  text-align: center;
+  background-color: yellow;
+  
+}

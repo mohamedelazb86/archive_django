@@ -13,12 +13,16 @@ def signup(request):
     '''
     if request.method=='POST':
         form=SignForm(request.POST)
-        if form.is_valid:
-            myform=form.save(commit=False)
+        if form.is_valid():
+            
             username=form.cleaned_data['username']
             email=form.cleaned_data['email']
 
-            myform.save() # trigger create profile
+            user=form.save(commit=False)
+
+            user.is_active=False
+
+            form.save() # trigger create profile
             profile=Profile.objects.get(user__username=username)
             # send email to this user
 

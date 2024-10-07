@@ -42,8 +42,12 @@ INSTALLED_APPS = [
 
     # my package
      "django_bootstrap5",
+     
 
      # my apps
+     'settings',
+     'home'
+
 
 ]
 
@@ -188,3 +192,5 @@ JAZZMIN_SETTINGS = {
 
    
 }
+
+LOGIN_REDIRECT_URL = '/'
