@@ -58,7 +58,123 @@ def edit_sector(request):
        
 
 def contractor(request):
-    return render(request,'settings/contractor.html',{})
+    contractor=Contractor.objects.all()
+    sector=Sector.objects.all()
+
+    context={
+        'contractor':contractor,
+        'sector':sector
+    }
+    return render(request,'settings/contractor.html',context)
+
+def add_contractor(request):
+    if request.method=='POST':
+        code=request.POST['code']
+        name=request.POST['name']
+        sector=request.POST['sector']
+        project=request.POST['project']
+        item=request.POST['item']
+        notes=request.POST['notes']
+
+        Contractor.objects.create(
+            code=code,
+            name=name,
+            sector_id=sector,
+            project=project,
+            item=item,
+            notes=notes
+        )
+        messages.success(request,'تم إضافة مقاول بنجاح مبروووووك')
+        return redirect('/settings/contractor')
+    
+def edit_contractor(request):
+    if request.method=='POST':
+        contractor_id=request.POST['id']
+
+        code=request.POST['code']
+        name=request.POST['name']
+        sector=request.POST['sector']
+        project=request.POST['project']
+        item=request.POST['item']
+        notes=request.POST['notes']
+
+        contractor=Contractor.objects.get(id=contractor_id)
+
+        contractor.code=code
+        contractor.name=name
+        contractor.sector_id=sector
+        contractor.project=project
+        contractor.item=item
+        contractor.notes=notes
+
+        contractor.save()
+
+        messages.success(request,'تم التعديل بنجاح')
+        return redirect('/settings/contractor')
+
+
+
+
+
+def delete_contractor(request):
+    if request.method=='POST':
+        contractor_id=request.POST['id']
+
+        contractor=Contractor.objects.get(id=contractor_id)
+
+        contractor.delete()
+
+        messages.success(request,'تم الحذف بنجاح مبرووك')
+        return redirect('/settings/contractor')
+
 
 def document_type(request):
-    return render(request,'settings/document_type.html',{})
+    document_type=Document_Type.objects.all()
+    context={
+        'document_type':document_type
+    }
+
+    return render(request,'settings/document_type.html',context)
+
+def add_document_type(request):
+    if request.method=='POST':
+        code=request.POST['code']
+        name=request.POST['name']
+        notes=request.POST['notes']
+
+        Document_Type.objects.create(
+            code=code,
+            name=name,
+            notes=notes
+        )
+        messages.success(request,'تم إضافة مستند جديد بنجاح')
+        return redirect('/settings/document_type')
+    
+def delete_document_type(request):
+    if request.method=='POST':
+        document_id=request.POST['id']
+        document_type=Document_Type.objects.get(id=document_id)
+        document_type.delete()
+        messages.success(request,'مبروك تم الحذف بنجاح')
+        return redirect('/settings/document_type')
+    
+def edit_document_type(request):
+    if request.method=='POST':
+        document_type_id=request.POST['id']
+
+        code=request.POST['code']
+        name=request.POST['name']
+        notes=request.POST['notes']
+
+        document_type=Document_Type.objects.get(id=document_type_id)
+
+        document_type.code=code
+        document_type.name=name
+        document_type.notes=notes
+        document_type.save()
+
+        messages.success(request,'تم التعديل بنجاج')
+        return redirect('/settings/document_type')
+
+
+
